@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Sách Đơn giản</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quản lý Sách</h1>
+
+        <div class="book-form">
+            <h2>Thêm/Cập nhật Sách</h2>
+            <input type="hidden" id="bookId">
+            <label for="title">Tiêu đề:</label>
+            <input type="text" id="title" required>
+            <label for="author">Tác giả:</label>
+            <input type="text" id="author" required>
+            <label for="isbn">ISBN:</label>
+            <input type="text" id="isbn" required>
+            <label for="publicationYear">Năm xuất bản:</label>
+            <input type="number" id="publicationYear">
+            <button id="saveBookBtn">Lưu Sách</button>
+            <button id="clearFormBtn">Xóa Form</button>
+        </div>
+
+        <div class="book-list">
+            <h2>Danh sách Sách</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tiêu đề</th>
+                        <th>Tác giả</th>
+                        <th>ISBN</th>
+                        <th>Năm xuất bản</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="booksTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
