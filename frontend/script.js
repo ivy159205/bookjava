@@ -8,17 +8,26 @@ const publicationYearInput = document.getElementById('publicationYear');
 const saveBookBtn = document.getElementById('saveBookBtn');
 const clearFormBtn = document.getElementById('clearFormBtn');
 
-// Hàm tải tất cả sách
-async function fetchBooks() {
+// Các phần tử mới cho tìm kiếm
+const searchKeywordInput = document.getElementById('searchKeyword');
+const searchBtn = document.getElementById('searchBtn');
+const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+// Hàm tải tất cả sách (hoặc tìm kiếm sách)
+async function fetchBooks(keyword = '') {
+    let url = API_BASE_URL;
+    if (keyword) {
+        url += `?keyword=${encodeURIComponent(keyword)}`;
+    }
     try {
-        const response = await fetch(API_BASE_URL);
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const books = await response.json();
         renderBooks(books);
     } catch (error) {
-        console.error('Lỗi khi tải sách:', error);
+        console.error('Lỗi khi tải/tìm kiếm sách:', error);
         alert('Không thể tải danh sách sách. Vui lòng kiểm tra console.');
     }
 }
@@ -26,6 +35,11 @@ async function fetchBooks() {
 // Hàm hiển thị sách ra bảng
 function renderBooks(books) {
     booksTableBody.innerHTML = ''; // Xóa nội dung cũ
+    if (books.length === 0) {
+        const row = booksTableBody.insertRow();
+        row.innerHTML = `<td colspan="6" style="text-align: center;">Không tìm thấy sách nào.</td>`;
+        return;
+    }
     books.forEach(book => {
         const row = booksTableBody.insertRow();
         row.innerHTML = `
@@ -135,6 +149,18 @@ function clearForm() {
     isbnInput.value = '';
     publicationYearInput.value = '';
 }
+
+// Event listener cho nút tìm kiếm
+searchBtn.addEventListener('click', () => {
+    const keyword = searchKeywordInput.value.trim();
+    fetchBooks(keyword);
+});
+
+// Event listener cho nút xóa tìm kiếm
+clearSearchBtn.addEventListener('click', () => {
+    searchKeywordInput.value = ''; // Xóa từ khóa tìm kiếm
+    fetchBooks(); // Tải lại tất cả sách
+});
 
 // Tải sách khi trang được load
 document.addEventListener('DOMContentLoaded', fetchBooks);

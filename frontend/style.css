@@ -3,6 +3,7 @@ body {
     margin: 20px;
     background-color: #f4f4f4;
     color: #333;
+    line-height: 1.6; /* Thêm để văn bản dễ đọc hơn */
 }
 
 .container {
@@ -11,15 +12,16 @@ body {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Tăng cường độ đổ bóng */
 }
 
 h1, h2 {
     color: #0056b3;
     text-align: center;
+    margin-bottom: 25px; /* Tăng khoảng cách dưới tiêu đề */
 }
 
-.book-form, .book-list {
+.book-form, .book-list, .search-section { /* Thêm .search-section */
     margin-bottom: 30px;
     padding: 20px;
     border: 1px solid #ddd;
@@ -29,20 +31,24 @@ h1, h2 {
 
 .book-form label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px; /* Tăng khoảng cách dưới label */
     font-weight: bold;
+    color: #555; /* Thêm màu cho label */
 }
 
 .book-form input[type="text"],
-.book-form input[type="number"] {
+.book-form input[type="number"],
+.search-section input[type="text"] { /* Áp dụng cho input tìm kiếm */
     width: calc(100% - 22px);
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 16px; /* Đảm bảo kích thước chữ dễ đọc */
 }
 
-.book-form button {
+/* Kiểu dáng cho nút chung */
+button {
     background-color: #007bff;
     color: white;
     padding: 10px 15px;
@@ -51,12 +57,14 @@ h1, h2 {
     cursor: pointer;
     font-size: 16px;
     margin-right: 10px;
+    transition: background-color 0.3s ease; /* Thêm hiệu ứng chuyển động */
 }
 
-.book-form button:hover {
+button:hover {
     background-color: #0056b3;
 }
 
+/* Các nút cụ thể trong form sách */
 .book-form button#clearFormBtn {
     background-color: #6c757d;
 }
@@ -65,25 +73,60 @@ h1, h2 {
     background-color: #5a6268;
 }
 
+/* Kiểu dáng cho phần tìm kiếm */
+.search-section {
+    display: flex; /* Sử dụng flexbox để căn chỉnh các phần tử */
+    gap: 10px; /* Khoảng cách giữa các phần tử */
+    align-items: center; /* Căn chỉnh theo chiều dọc */
+}
+
+.search-section input[type="text"] {
+    flex-grow: 1; /* Cho phép input mở rộng để lấp đầy không gian */
+    margin-bottom: 0; /* Loại bỏ margin-bottom mặc định */
+}
+
+.search-section button {
+    white-space: nowrap; /* Ngăn nút xuống dòng */
+}
+
+.search-section button#clearSearchBtn {
+    background-color: #6c757d;
+}
+
+.search-section button#clearSearchBtn:hover {
+    background-color: #5a6268;
+}
+
+
+/* Bảng */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Thêm đổ bóng cho bảng */
 }
 
 table th, table td {
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 12px; /* Tăng padding để dễ đọc hơn */
     text-align: left;
+    vertical-align: middle; /* Căn chỉnh nội dung ô theo chiều dọc */
 }
 
 table th {
     background-color: #007bff;
     color: white;
+    font-weight: bold;
+    text-transform: uppercase; /* Chữ hoa cho tiêu đề cột */
+    letter-spacing: 0.5px; /* Thêm khoảng cách chữ */
 }
 
 table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f8f8f8; /* Màu nhẹ hơn cho hàng chẵn */
+}
+
+table tr:hover {
+    background-color: #e9ecef; /* Hiệu ứng hover cho hàng */
 }
 
 table td button {
@@ -94,6 +137,8 @@ table td button {
     border-radius: 4px;
     cursor: pointer;
     margin-right: 5px;
+    font-size: 14px; /* Kích thước chữ nhỏ hơn cho nút trong bảng */
+    transition: background-color 0.3s ease;
 }
 
 table td button:hover {
@@ -107,4 +152,71 @@ table td button.delete-btn {
 
 table td button.delete-btn:hover {
     background-color: #c82333;
+}
+
+/* Responsive design (tùy chọn) */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .book-form input[type="text"],
+    .book-form input[type="number"],
+    .search-section input[type="text"] {
+        width: calc(100% - 20px); /* Điều chỉnh cho padding nhỏ hơn */
+    }
+
+    .search-section {
+        flex-direction: column; /* Xếp chồng các phần tử tìm kiếm trên màn hình nhỏ */
+        align-items: stretch;
+    }
+
+    .search-section input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .search-section button {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    /* Ẩn tiêu đề cột trên di động */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    table tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    table td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: #0056b3;
+    }
 }

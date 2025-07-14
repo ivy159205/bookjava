@@ -27,17 +27,14 @@ public class BookService {
     }
 
     public Book updateBook(Long id, Book bookDetails) {
-        Optional<Book> optionalBook = bookRepository.findById(id);
-        if (optionalBook.isPresent()) {
-            Book existingBook = optionalBook.get();
-            existingBook.setTitle(bookDetails.getTitle());
-            existingBook.setAuthor(bookDetails.getAuthor());
-            existingBook.setIsbn(bookDetails.getIsbn());
-            existingBook.setPublicationYear(bookDetails.getPublicationYear());
-            return bookRepository.save(existingBook);
-        } else {
-            return null; // Hoặc ném một ngoại lệ NotFoundException
-        }
+        return bookRepository.findById(id)
+                .map(book -> {
+                    book.setTitle(bookDetails.getTitle());
+                    book.setAuthor(bookDetails.getAuthor());
+                    book.setIsbn(bookDetails.getIsbn());
+                    book.setPublicationYear(bookDetails.getPublicationYear());
+                    return bookRepository.save(book);
+                }).orElse(null);
     }
 
     public boolean deleteBook(Long id) {
@@ -47,4 +44,10 @@ public class BookService {
         }
         return false;
     }
+
+   // Phương thức tìm kiếm mới
+   public List<Book> searchBooks(String keyword) {
+       // Tìm kiếm theo tiêu đề HOẶC tác giả, không phân biệt chữ hoa chữ thường
+       return bookRepository.findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(keyword, keyword);
+   }
 }

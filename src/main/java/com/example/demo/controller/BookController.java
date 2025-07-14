@@ -18,7 +18,10 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public List<Book> getAllBooks() {
+    public List<Book> getAllBooks(@RequestParam(required = false) String keyword) {
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            return bookService.searchBooks(keyword);
+        }
         return bookService.getAllBooks();
     }
 
