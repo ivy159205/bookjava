@@ -1,7 +1,9 @@
+// src/main/java/com/example/demo/controller/ProductController.java
 package com.example.demo.controller;
 
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
+import com.example.demo.dto.ProductStatistics; // Import DTO thống kê
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,13 +45,13 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Optional<Product> product = productService.getProductById(id);
-        return product.map(ResponseEntity::ok) // Nếu tìm thấy, trả về 200 OK với Product
-                      .orElse(ResponseEntity.notFound().build()); // Nếu không tìm thấy, trả về 404 Not Found
+        return product.map(ResponseEntity::ok)
+                      .orElse(ResponseEntity.notFound().build());
     }
 
     // Endpoint để tạo sản phẩm mới
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED) // Trả về 201 Created khi tạo thành công
+    @ResponseStatus(HttpStatus.CREATED)
     public Product createProduct(@RequestBody Product product) {
         return productService.createProduct(product);
     }
@@ -59,19 +61,28 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
         Product updatedProduct = productService.updateProduct(id, productDetails);
         if (updatedProduct != null) {
-            return ResponseEntity.ok(updatedProduct); // Trả về 200 OK với sản phẩm đã cập nhật
+            return ResponseEntity.ok(updatedProduct);
         } else {
-            return ResponseEntity.notFound().build(); // Trả về 404 Not Found nếu không tìm thấy sản phẩm để cập nhật
+            return ResponseEntity.notFound().build();
         }
     }
 
     // Endpoint để xóa sản phẩm
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT) // Trả về 204 No Content khi xóa thành công
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable Long id) {
-        // productService.deleteProduct(id) trả về boolean, bạn có thể kiểm tra nó
-        // để trả về 404 nếu ID không tồn tại, nhưng hiện tại nó chỉ xóa và trả 204
-        // nếu thành công hoặc có lỗi nếu ID không tồn tại và không được kiểm tra trước đó.
         productService.deleteProduct(id);
+    }
+
+    // --- Endpoint thống kê mới ---
+    @GetMapping("/statistics")
+    public ResponseEntity<ProductStatistics> getProductStatistics() {
+        ProductStatistics stats = productService.getProductStatistics();
+        if (stats != null) {
+            return ResponseEntity.ok(stats);
+        } else {
+            // Trường hợp không có sản phẩm nào, hoặc lỗi trong service/repo
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

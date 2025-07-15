@@ -56,6 +56,18 @@
                     </tbody>
             </table>
         </div>
+
+        <div class="statistics-section">
+            <h2>Thống kê Sản phẩm</h2>
+            <button onclick="fetchStatistics()">Hiển thị Thống kê</button>
+            <div id="statisticsOutput">
+                <p><strong>Tổng số sản phẩm:</strong> <span id="statTotalProducts">N/A</span></p>
+                <p><strong>Giá trung bình:</strong> <span id="statAveragePrice">N/A</span></p>
+                <p><strong>Tổng số lượng sản phẩm:</strong> <span id="statTotalQuantity">N/A</span></p>
+                <p><strong>Giá cao nhất:</strong> <span id="statMaxPrice">N/A</span></p>
+                <p><strong>Giá thấp nhất:</strong> <span id="statMinPrice">N/A</span></p>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

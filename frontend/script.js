@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * @param {number} price - Giá tìm kiếm (tùy chọn).
  */
 async function fetchProducts(name = '', price = null) {
-    let url = new URL(API_URL); // Sử dụng đối tượng URL để dễ dàng thêm tham số
+    let url = new URL(API_URL);
 
     if (name) {
         url.searchParams.append('name', name);
@@ -42,7 +42,6 @@ function performSearch() {
 
     const priceValue = searchPrice ? parseFloat(searchPrice) : null;
 
-    // Gọi hàm fetchProducts với các tham số tìm kiếm
     fetchProducts(searchName, priceValue);
 }
 
@@ -69,12 +68,12 @@ async function searchProductById() {
             throw new Error(`Lỗi HTTP: ${response.status}`);
         }
         const product = await response.json();
-        renderProducts([product]); // Hiển thị chỉ sản phẩm tìm được
+        renderProducts([product]);
     } catch (error) {
         console.error('Lỗi khi tìm kiếm sản phẩm theo ID:', error);
         alert('Không thể tìm kiếm sản phẩm theo ID. Vui lòng thử lại.');
     } finally {
-        // searchIdInput.value = ''; // Tùy chọn: bạn có thể xóa ID sau khi tìm kiếm
+        searchIdInput.value = ''; // Xóa trường ID sau khi tìm kiếm
     }
 }
 
@@ -84,7 +83,7 @@ async function searchProductById() {
  */
 function renderProducts(products) {
     const tableBody = document.querySelector('#productTable tbody');
-    tableBody.innerHTML = ''; // Xóa các hàng cũ
+    tableBody.innerHTML = '';
 
     if (!products || products.length === 0) {
         tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Không có sản phẩm nào được tìm thấy.</td></tr>';
@@ -147,6 +146,7 @@ async function saveProduct() {
 
         clearForm();
         fetchProducts(); // Tải lại danh sách sau khi lưu
+        fetchStatistics(); // Cập nhật thống kê sau khi thêm/sửa/xóa
     } catch (error) {
         console.error('Lỗi khi lưu sản phẩm:', error);
         alert('Không thể lưu sản phẩm. Vui lòng thử lại.');
@@ -192,6 +192,7 @@ async function deleteProduct(id) {
         }
 
         fetchProducts(); // Tải lại danh sách sau khi xóa
+        fetchStatistics(); // Cập nhật thống kê sau khi thêm/sửa/xóa
     } catch (error) {
         console.error('Lỗi khi xóa sản phẩm:', error);
         alert('Không thể xóa sản phẩm. Vui lòng thử lại.');
@@ -217,4 +218,31 @@ function clearSearch() {
     document.getElementById('searchPrice').value = '';
     document.getElementById('searchId').value = '';
     fetchProducts(); // Tải lại tất cả sản phẩm
+}
+
+// --- Hàm mới để lấy và hiển thị thống kê ---
+async function fetchStatistics() {
+    try {
+        const response = await fetch(`${API_URL}/statistics`);
+        if (!response.ok) {
+            throw new Error(`Lỗi HTTP: ${response.status}`);
+        }
+        const stats = await response.json();
+        
+        document.getElementById('statTotalProducts').textContent = stats.totalProducts !== null ? stats.totalProducts : 'N/A';
+        document.getElementById('statAveragePrice').textContent = stats.averagePrice !== null ? stats.averagePrice.toFixed(2) : 'N/A';
+        document.getElementById('statTotalQuantity').textContent = stats.totalQuantity !== null ? stats.totalQuantity : 'N/A';
+        document.getElementById('statMaxPrice').textContent = stats.maxPrice !== null ? stats.maxPrice.toFixed(2) : 'N/A';
+        document.getElementById('statMinPrice').textContent = stats.minPrice !== null ? stats.minPrice.toFixed(2) : 'N/A';
+
+    } catch (error) {
+        console.error('Lỗi khi lấy thống kê sản phẩm:', error);
+        alert('Không thể tải thống kê sản phẩm. Vui lòng thử lại.');
+        // Đặt lại các giá trị thống kê về N/A khi có lỗi
+        document.getElementById('statTotalProducts').textContent = 'N/A';
+        document.getElementById('statAveragePrice').textContent = 'N/A';
+        document.getElementById('statTotalQuantity').textContent = 'N/A';
+        document.getElementById('statMaxPrice').textContent = 'N/A';
+        document.getElementById('statMinPrice').textContent = 'N/A';
+    }
 }
