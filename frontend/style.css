@@ -1,92 +1,121 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font hiện đại hơn */
+    margin: 0; /* Đặt margin về 0 để kiểm soát dễ hơn */
+    padding: 20px;
+    background-color: #e9eff5; /* Màu nền nhẹ nhàng hơn */
     color: #333;
-    line-height: 1.6; /* Thêm để văn bản dễ đọc hơn */
+    line-height: 1.6;
+    display: flex; /* Dùng flexbox để căn giữa nội dung */
+    justify-content: center;
+    align-items: flex-start; /* Căn trên cùng */
+    min-height: 100vh; /* Đảm bảo body có chiều cao đầy đủ */
 }
 
 .container {
     max-width: 900px;
+    width: 100%; /* Đảm bảo container chiếm toàn bộ chiều rộng có thể */
     margin: 0 auto;
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Tăng cường độ đổ bóng */
+    padding: 30px; /* Tăng padding */
+    border-radius: 12px; /* Bo tròn góc nhiều hơn */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Đổ bóng mềm mại hơn */
 }
 
 h1, h2 {
-    color: #0056b3;
+    color: #007bff; /* Giữ màu xanh chính */
     text-align: center;
-    margin-bottom: 25px; /* Tăng khoảng cách dưới tiêu đề */
+    margin-bottom: 30px; /* Tăng khoảng cách dưới tiêu đề */
+    font-weight: 600; /* Làm cho tiêu đề đậm hơn một chút */
 }
 
-.book-form, .book-list, .search-section { /* Thêm .search-section */
+.product-form, .product-list, .search-section { /* Đổi tên selectors */
     margin-bottom: 30px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+    padding: 25px; /* Tăng padding */
+    border: 1px solid #e0e0e0; /* Border nhẹ hơn */
+    border-radius: 10px; /* Bo tròn góc */
+    background-color: #fcfcfc; /* Màu nền nhẹ hơn */
 }
 
-.book-form label {
+.product-form label {
     display: block;
-    margin-bottom: 8px; /* Tăng khoảng cách dưới label */
-    font-weight: bold;
-    color: #555; /* Thêm màu cho label */
+    margin-bottom: 8px;
+    font-weight: 600; /* Đậm hơn */
+    color: #444; /* Màu đậm hơn cho label */
+    font-size: 15px;
 }
 
-.book-form input[type="text"],
-.book-form input[type="number"],
-.search-section input[type="text"] { /* Áp dụng cho input tìm kiếm */
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px; /* Đảm bảo kích thước chữ dễ đọc */
+.product-form input[type="text"],
+.product-form input[type="number"],
+.search-section input[type="text"],
+.search-section input[type="number"] { /* Áp dụng cho cả input type="number" trong search */
+    width: calc(100% - 24px); /* Điều chỉnh padding */
+    padding: 12px; /* Tăng padding */
+    margin-bottom: 18px; /* Tăng khoảng cách dưới */
+    border: 1px solid #c9d2d9; /* Border tinh tế hơn */
+    border-radius: 6px; /* Bo tròn góc */
+    font-size: 16px;
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng tổng thể */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Thêm hiệu ứng focus */
+}
+
+.product-form input[type="text"]:focus,
+.product-form input[type="number"]:focus,
+.search-section input[type="text"]:focus,
+.search-section input[type="number"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Hiệu ứng shadow khi focus */
+    outline: none; /* Bỏ outline mặc định của trình duyệt */
 }
 
 /* Kiểu dáng cho nút chung */
 button {
     background-color: #007bff;
     color: white;
-    padding: 10px 15px;
+    padding: 12px 20px; /* Tăng padding */
     border: none;
-    border-radius: 4px;
+    border-radius: 6px; /* Bo tròn góc nhiều hơn */
     cursor: pointer;
     font-size: 16px;
     margin-right: 10px;
-    transition: background-color 0.3s ease; /* Thêm hiệu ứng chuyển động */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Thêm hiệu ứng transform */
+    font-weight: 500;
 }
 
 button:hover {
     background-color: #0056b3;
+    transform: translateY(-2px); /* Nâng nút lên một chút khi hover */
 }
 
-/* Các nút cụ thể trong form sách */
-.book-form button#clearFormBtn {
+button:active {
+    transform: translateY(0); /* Đặt lại vị trí khi click */
+}
+
+/* Các nút cụ thể trong form sản phẩm */
+.product-form button#clearFormBtn {
     background-color: #6c757d;
 }
 
-.book-form button#clearFormBtn:hover {
+.product-form button#clearFormBtn:hover {
     background-color: #5a6268;
 }
 
 /* Kiểu dáng cho phần tìm kiếm */
 .search-section {
-    display: flex; /* Sử dụng flexbox để căn chỉnh các phần tử */
-    gap: 10px; /* Khoảng cách giữa các phần tử */
-    align-items: center; /* Căn chỉnh theo chiều dọc */
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các mục xuống dòng nếu không đủ chỗ */
+    gap: 15px; /* Tăng khoảng cách giữa các phần tử */
+    align-items: center;
 }
 
-.search-section input[type="text"] {
-    flex-grow: 1; /* Cho phép input mở rộng để lấp đầy không gian */
+.search-section input { /* Áp dụng cho tất cả input trong search-section */
+    flex-grow: 1;
     margin-bottom: 0; /* Loại bỏ margin-bottom mặc định */
+    min-width: 180px; /* Đảm bảo input không quá nhỏ */
 }
 
 .search-section button {
-    white-space: nowrap; /* Ngăn nút xuống dòng */
+    white-space: nowrap;
+    flex-shrink: 0; /* Ngăn nút co lại */
 }
 
 .search-section button#clearSearchBtn {
@@ -97,97 +126,112 @@ button:hover {
     background-color: #5a6268;
 }
 
-
 /* Bảng */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Thêm đổ bóng cho bảng */
+    margin-top: 25px; /* Tăng khoảng cách trên */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07); /* Đổ bóng mềm mại hơn */
+    border-radius: 8px; /* Bo tròn góc cho bảng */
+    overflow: hidden; /* Đảm bảo bo tròn góc được áp dụng */
 }
 
 table th, table td {
-    border: 1px solid #ddd;
-    padding: 12px; /* Tăng padding để dễ đọc hơn */
+    border: 1px solid #e9ecef; /* Border nhẹ hơn */
+    padding: 15px; /* Tăng padding */
     text-align: left;
-    vertical-align: middle; /* Căn chỉnh nội dung ô theo chiều dọc */
+    vertical-align: middle;
 }
 
 table th {
     background-color: #007bff;
     color: white;
-    font-weight: bold;
-    text-transform: uppercase; /* Chữ hoa cho tiêu đề cột */
-    letter-spacing: 0.5px; /* Thêm khoảng cách chữ */
+    font-weight: 600; /* Đậm hơn */
+    text-transform: uppercase;
+    letter-spacing: 0.8px; /* Tăng khoảng cách chữ */
+    font-size: 14px;
 }
 
 table tr:nth-child(even) {
-    background-color: #f8f8f8; /* Màu nhẹ hơn cho hàng chẵn */
+    background-color: #f8fbff; /* Màu nền rất nhẹ cho hàng chẵn */
 }
 
 table tr:hover {
-    background-color: #e9ecef; /* Hiệu ứng hover cho hàng */
+    background-color: #e0f0ff; /* Màu hover nổi bật hơn */
 }
 
 table td button {
-    background-color: #ffc107;
-    color: #333;
+    background-color: #28a745; /* Màu xanh lá cho nút sửa */
+    color: white;
     border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
+    padding: 9px 14px;
+    border-radius: 5px;
     cursor: pointer;
-    margin-right: 5px;
-    font-size: 14px; /* Kích thước chữ nhỏ hơn cho nút trong bảng */
-    transition: background-color 0.3s ease;
+    margin-right: 8px;
+    font-size: 13px; /* Kích thước chữ nhỏ hơn */
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 table td button:hover {
-    background-color: #e0a800;
+    background-color: #218838;
+    transform: translateY(-1px);
 }
 
 table td button.delete-btn {
-    background-color: #dc3545;
-    color: white;
+    background-color: #dc3545; /* Màu đỏ cho nút xóa */
 }
 
 table td button.delete-btn:hover {
     background-color: #c82333;
 }
 
-/* Responsive design (tùy chọn) */
+/* Responsive design */
 @media (max-width: 768px) {
-    .container {
-        margin: 10px;
-        padding: 15px;
+    body {
+        padding: 10px;
     }
 
-    .book-form input[type="text"],
-    .book-form input[type="number"],
-    .search-section input[type="text"] {
-        width: calc(100% - 20px); /* Điều chỉnh cho padding nhỏ hơn */
+    .container {
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .product-form input,
+    .search-section input {
+        width: 100%; /* Input full width trên màn hình nhỏ */
+        margin-bottom: 15px;
+    }
+
+    button {
+        width: 100%; /* Nút full width */
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 
     .search-section {
         flex-direction: column; /* Xếp chồng các phần tử tìm kiếm trên màn hình nhỏ */
         align-items: stretch;
-    }
-
-    .search-section input[type="text"] {
-        width: 100%;
-        margin-bottom: 10px;
+        gap: 10px; /* Điều chỉnh lại gap */
     }
 
     .search-section button {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 10px;
+        margin-bottom: 0; /* Bỏ margin-bottom cuối cùng */
     }
 
     table, thead, tbody, th, td, tr {
         display: block;
     }
 
-    /* Ẩn tiêu đề cột trên di động */
     thead tr {
         position: absolute;
         top: -9999px;
@@ -195,28 +239,33 @@ table td button.delete-btn:hover {
     }
 
     table tr {
-        border: 1px solid #ccc;
-        margin-bottom: 10px;
+        border: 1px solid #eee;
+        margin-bottom: 15px;
         border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     table td {
         border: none;
         position: relative;
-        padding-left: 50%;
+        padding-left: 50%; /* Dành không gian cho label */
         text-align: right;
+        font-size: 14px;
     }
 
     table td:before {
         content: attr(data-label);
         position: absolute;
-        left: 6px;
+        left: 10px; /* Điều chỉnh vị trí label */
         width: 45%;
         padding-right: 10px;
         white-space: nowrap;
         text-align: left;
         font-weight: bold;
-        color: #0056b3;
+        color: #007bff; /* Màu sắc cho label */
     }
+
+    /* Thêm data-label vào HTML cho mỗi td để hiển thị trên mobile */
+    /* Ví dụ: <td data-label="Tên sản phẩm">${product.name}</td> */
+    /* Cần chỉnh sửa trong hàm renderProducts của script.js */
 }
